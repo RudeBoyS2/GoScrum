@@ -16,7 +16,7 @@ import {
 
 const { REACT_APP_API } = process.env;
 
-const TaskForm = () => {
+const TaskForm = ({ onSubmitCallback }) => {
   const toast = useToast();
 
   const initialValues = {
@@ -46,6 +46,7 @@ const TaskForm = () => {
     })
       .then((response) => response.json())
       .then((data) => {
+        onSubmitCallback();
         resetForm();
         toast({
           title: "Tarea creada correctamente.",

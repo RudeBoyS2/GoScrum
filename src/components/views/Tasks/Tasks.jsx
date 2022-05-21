@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import debounce from "lodash.debounce";
 import TaskForm from "./TaskForm";
 import TaskCard from "./TaskCard";
 import {
@@ -18,11 +19,14 @@ const { REACT_APP_API } = process.env;
 
 const Tasks = () => {
   const [list, setList] = useState(null);
-  const [selectedPriority, setSelectedPriority] = useState("ALL")
-  const [value, setValue] = useState("1");
+  const [firstList, setFirstList] = useState(null);
+  const [search, setSearch] = useState("");
+  const [selectedPriority, setSelectedPriority] = useState("ALL");
+  const [newTask, setNewTask] = useState(false);
+  const [radioTask, setRadioTask] = useState("ALL");
 
   useEffect(() => {
-    fetch(`${REACT_APP_API}/task`, {
+    fetch(`${REACT_APP_API}/task${radioTask === "ME" ? "/me" : ""}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("token"),
@@ -30,45 +34,25 @@ const Tasks = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (selectedPriority === "ALL") {
-          setList(data.result);
-        } else {
-          setList(data.result.filter((data) => data.importance === selectedPriority))
+        console.log(radioTask);
+        setNewTask(false);
+        setList(data.result);
+        setFirstList(data.result);
+        if (selectedPriority !== "ALL") {
+          setList(
+            data.result.filter((data) => data.importance === selectedPriority)
+          );
         }
       });
-  }, [selectedPriority, list]);
+  }, [selectedPriority, newTask, radioTask]);
 
-  // useEffect(() => {
-  //   fetch(`${REACT_APP_API}/task`, {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: "Bearer " + localStorage.getItem("token"),
-  //     },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setRenderList(data.result);
-  //     });
-  // }, []);
-
-
-  // const renderNewCards = () => {
-  //   return renderList
-  //     ?.filter((data) => data.status === "NEW")
-  //     .map((data) => <TaskCard data={data} key={data._id} />);
-  // };
-
-  // const renderInProgressCards = () => {
-  //   return renderList
-  //     ?.filter((data) => data.status === "IN PROGRESS")
-  //     .map((data) => <TaskCard data={data} key={data._id} />);
-  // };
-
-  // const renderFinishedCards = () => {
-  //   return renderList
-  //     ?.filter((data) => data.status === "FINISHED")
-  //     .map((data) => <TaskCard data={data} key={data._id} />);
-  // };
+  useEffect(() => {
+    if (search) {
+      setList((prev) => prev.filter((data) => data.title.toLowerCase().startsWith(search)));
+    } else {
+      setList(firstList);
+    }
+  }, [search]);
 
   const renderNewCards = () => {
     return list
@@ -88,18 +72,16 @@ const Tasks = () => {
       .map((data) => <TaskCard data={data} key={data._id} />);
   };
 
-  // const handleImportanceChange = (e) => {
-  //   if (e.currentTarget.value === "ALL") {
-  //     setRenderList(list);
-  //   } else {
-  //     setRenderList(
-  //       list.filter((data) => data.importance === e.currentTarget.value)
-  //     );
-  //   }
-  // };
+  const handleSearch = debounce((e) => {
+    setSearch(e?.target?.value);
+  }, 400);
 
   const handleImportanceChange = (e) => {
-    setSelectedPriority(e.currentTarget.value)
+    setSelectedPriority(e.currentTarget.value);
+  };
+
+  const onSubmitCallback = () => {
+    setNewTask(true);
   };
 
   return (
@@ -110,10 +92,9 @@ const Tasks = () => {
       spacing={0}
     >
       <Stack width="100%" p={5} justify="flex-start">
-        <TaskForm />
+        <TaskForm onSubmitCallback={onSubmitCallback} />
       </Stack>
       <Stack
-        // border={{ base: "0px", md: "1px" }}
         boxShadow="rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px"
         width="100%"
         minHeight="100%"
@@ -126,7 +107,7 @@ const Tasks = () => {
           Mis tareas
         </Heading>
         <HStack spacing={10} justify="space-between">
-          <RadioGroup onChange={setValue} value={value}>
+          <RadioGroup onChange={setRadioTask} value={radioTask}>
             <Stack direction={{ base: "column", sm: "row" }}>
               <Radio value="ALL">Todas</Radio>
               <Radio value="ME" width="100px">
@@ -139,6 +120,8 @@ const Tasks = () => {
               <Input
                 type="search"
                 placeholder="Buscar por título..."
+                onChange={handleSearch}
+                // value={}
                 size="xs"
                 height="35px"
                 width="190px"
