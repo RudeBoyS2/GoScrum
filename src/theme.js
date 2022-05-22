@@ -1,6 +1,10 @@
 import { extendTheme } from "@chakra-ui/react";
 
 const theme = extendTheme({
+  config: {
+    initialColorMode: 'light',
+    useSystemColorMode: true,
+  },
   styles: {
     global: {
       "html, body, #root, main": {
@@ -9,12 +13,18 @@ const theme = extendTheme({
       },
     },
   },
+  fonts: {
+    body: "Inter, sans-serif",
+    heading: "Inter, sans-serif",
+    logo: "Poppins, sans-serif",
+  },
   colors: {
     primary: "#FF452B",
     secondary: "#007BFF",
     tertiary: "#1EC876",
     bg: "#FAFAFA",
-    cardBg: "transparent",
+    bgDark: "#1A202C",
+    none: "transparent",
     font: "#000",
     error: "red",
     button: "white",

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Stack, Button, Text, Flex } from "@chakra-ui/react";
 
 const TaskCard = ({
@@ -8,8 +9,18 @@ const TaskCard = ({
     description,
     status,
     importance,
-  }
+  },
 }) => {
+  const [showMore, setShowMore] = useState(false);
+
+  const limitString = (string) => {
+    if (string.length > 150) {
+      return { string: string.slice(0, 147).concat("..."), addButton: true };
+    } else {
+      return { string: string, addButton: false };
+    }
+  };
+
   const statusButtonColor = () => {
     if (status === "NEW") {
       return "primary";
@@ -32,7 +43,7 @@ const TaskCard = ({
 
   return (
     <Stack
-      width={{ base: "100%", xl: "200px", '2xl': "300px" }}
+      width={{ base: "100%", xl: "200px", "2xl": "300px" }}
       minHeight="130px"
       justify="space-between"
       direction="row"
@@ -82,10 +93,49 @@ const TaskCard = ({
             {importance.toLowerCase()}
           </Button>
         </Stack>
-        <Text fontSize="xs">{description}</Text>
+        {!showMore && (
+          <Text fontSize="xs">{limitString(description).string}</Text>
+        )}
+        {showMore && (
+          <>
+            <Text fontSize="xs">{description}</Text>
+            <Button
+              onClick={() => setShowMore(false)}
+              color="button"
+              bg="primary"
+              fontSize="xs"
+              height="16px"
+              width="70px"
+              _hover={{
+                bg: "button",
+                color: "primary",
+                border: "1px",
+              }}
+            >
+              Ver menos
+            </Button>
+          </>
+        )}
+        {!showMore && limitString(description).addButton && (
+          <Button
+            onClick={() => setShowMore(true)}
+            color="button"
+            bg="primary"
+            fontSize="xs"
+            height="16px"
+            width="70px"
+            _hover={{
+              bg: "button",
+              color: "primary",
+              border: "1px",
+            }}
+          >
+            Ver más
+          </Button>
+        )}
       </Flex>
       <Stack>
-        <Button size="xs" bg="cardBg" _hover={{ bg: "cardBg" }}>
+        <Button size="xs" bg="none" _hover={{ bg: "none" }}>
           X
         </Button>
       </Stack>
