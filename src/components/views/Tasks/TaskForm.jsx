@@ -84,7 +84,7 @@ const TaskForm = ({ onSubmitCallback }) => {
       </Heading>
       <form onSubmit={handleSubmit}>
         <VStack>
-          <Stack width="100%" direction={{ base: "column", sm: "row" }}>
+          <Stack width="100%" direction="column">
             <FormControl>
               <Input
                 height="35px"
@@ -176,6 +176,11 @@ const TaskForm = ({ onSubmitCallback }) => {
             height="40px"
             color="white"
             _hover={{
+              bg: "white",
+              color: "primary",
+              border: "1px",
+            }}
+            _active={{
               bg: "white",
               color: "primary",
               border: "1px",

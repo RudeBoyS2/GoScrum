@@ -12,6 +12,7 @@ import {
   Text,
   Select,
   Switch,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import * as Yup from "yup";
 import { v4 as uuidv4 } from "uuid";
@@ -21,7 +22,6 @@ const { REACT_APP_API } = process.env;
 
 const Register = () => {
   const [data, setData] = useState(null);
-  
 
   useEffect(() => {
     fetch(`${REACT_APP_API}/auth/data`)
@@ -50,7 +50,6 @@ const Register = () => {
     email: Yup.string()
       .email("Ingresa un email válido")
       .required("Ingresa una dirección de correo electrónico"),
-    // teamID: Yup.string().required("Ingresa un identificador de equipo"),
     role: Yup.string().required("Selecciona un rol"),
     continent: Yup.string().required("Selecciona un continente"),
     region: Yup.string().required("Selecciona una región"),
@@ -95,24 +94,25 @@ const Register = () => {
     if (value !== "America") setFieldValue("region", "Otro");
   };
 
+  const textColor = useColorModeValue("font", "bg");
+
   return (
     <Flex align="center" justify="center" height="100%" mt={1}>
       <Flex
-        bg="white"
         mb={2}
         px={4}
         pt={3}
         pb={2}
-        rounded="md"
-        border="1px"
-        color="border"
+        bg={useColorModeValue("bg", "bgDark")}
+        rounded="lg"
+        boxShadow={{ md: "2xl" }}
         flexDirection="column"
         width="420px"
       >
         <Heading
           as="h1"
           fontSize={{ base: "25px", lg: "22px", "2xl": "25px" }}
-          color="font"
+          color={textColor}
           alignSelf="flex-start"
           pb={2}
         >
@@ -121,10 +121,16 @@ const Register = () => {
         <form onSubmit={handleSubmit} height="500px">
           <VStack spacing={2} align="flex-start" color="font">
             <FormControl>
-              <FormLabel mb={0} htmlFor="username" fontWeight="normal">
+              <FormLabel
+                mb={0}
+                htmlFor="username"
+                fontWeight="normal"
+                color={textColor}
+              >
                 Nombre de usuario
               </FormLabel>
               <Input
+                color={textColor}
                 height={{ base: "35px", "2xl": "40px" }}
                 name="username"
                 type="text"
@@ -143,10 +149,16 @@ const Register = () => {
             </FormControl>
 
             <FormControl>
-              <FormLabel fontWeight="normal" mb={0} htmlFor="password">
+              <FormLabel
+                fontWeight="normal"
+                mb={0}
+                htmlFor="password"
+                color={textColor}
+              >
                 Contraseña
               </FormLabel>
               <Input
+                color={textColor}
                 height={{ base: "35px", "2xl": "40px" }}
                 name="password"
                 type="password"
@@ -164,10 +176,16 @@ const Register = () => {
               )}
             </FormControl>
             <FormControl>
-              <FormLabel fontWeight="normal" mb={0} htmlFor="email">
+              <FormLabel
+                fontWeight="normal"
+                mb={0}
+                htmlFor="email"
+                color={textColor}
+              >
                 Email
               </FormLabel>
               <Input
+                color={textColor}
                 height={{ base: "35px", "2xl": "40px" }}
                 name="email"
                 type="email"
@@ -192,14 +210,22 @@ const Register = () => {
                   setFieldValue("switch", !values.switch);
                 }}
               />
-              <Text fontSize="14px">Perteneces a un equipo ya creado</Text>
+              <Text fontSize="14px" color={textColor}>
+                Perteneces a un equipo ya creado
+              </Text>
             </HStack>
             {values.switch && (
               <FormControl>
-                <FormLabel fontWeight="normal" mb={0} htmlFor="role">
+                <FormLabel
+                  fontWeight="normal"
+                  mb={0}
+                  htmlFor="role"
+                  color={textColor}
+                >
                   Por favor, introduce el identificador de equipo
                 </FormLabel>
                 <Input
+                  color={textColor}
                   type="text"
                   name="teamID"
                   value={values.teamID}
@@ -208,10 +234,16 @@ const Register = () => {
               </FormControl>
             )}
             <FormControl>
-              <FormLabel fontWeight="normal" mb={0} htmlFor="role">
+              <FormLabel
+                fontWeight="normal"
+                mb={0}
+                htmlFor="role"
+                color={textColor}
+              >
                 Rol
               </FormLabel>
               <Select
+                color={textColor}
                 height={{ base: "35px", "2xl": "40px" }}
                 name="role"
                 borderColor={errors.role && touched.role && "red"}
@@ -233,10 +265,16 @@ const Register = () => {
               )}
             </FormControl>
             <FormControl>
-              <FormLabel fontWeight="normal" mb={0} htmlFor="continent">
+              <FormLabel
+                fontWeight="normal"
+                mb={0}
+                htmlFor="continent"
+                color={textColor}
+              >
                 Continente
               </FormLabel>
               <Select
+                color={textColor}
                 height={{ base: "35px", "2xl": "40px" }}
                 name="continent"
                 borderColor={errors.continent && touched.continent && "red"}
@@ -259,10 +297,16 @@ const Register = () => {
             </FormControl>
             {values.continent === "America" && (
               <FormControl>
-                <FormLabel fontWeight="normal" mb={0} htmlFor="region">
+                <FormLabel
+                  fontWeight="normal"
+                  mb={0}
+                  htmlFor="region"
+                  color={textColor}
+                >
                   Región
                 </FormLabel>
                 <Select
+                  color={textColor}
                   height={{ base: "35px", "2xl": "40px" }}
                   name="region"
                   borderColor={errors.region && touched.region && "red"}
@@ -295,13 +339,18 @@ const Register = () => {
                 color: "primary",
                 border: "1px",
               }}
+              _active={{
+                bg: "white",
+                color: "primary",
+                border: "1px",
+              }}
             >
               Enviar
             </Button>
           </VStack>
         </form>
         <Text
-          color="font"
+          color={textColor}
           alignSelf="flex-start"
           pt={1}
           _hover={{ color: "link" }}

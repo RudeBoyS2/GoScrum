@@ -75,6 +75,11 @@ const TaskCard = ({
               color: statusButtonColor(),
               border: "1px",
             }}
+            _active={{
+              bg: "white",
+              color: statusButtonColor(),
+              border: "1px",
+            }}
           >
             {status.toLowerCase()}
           </Button>
@@ -86,6 +91,11 @@ const TaskCard = ({
             bg={importanceButtonColor()}
             _hover={{
               bg: "button",
+              color: importanceButtonColor(),
+              border: "1px",
+            }}
+            _active={{
+              bg: "white",
               color: importanceButtonColor(),
               border: "1px",
             }}

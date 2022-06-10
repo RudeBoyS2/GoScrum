@@ -10,6 +10,7 @@ import {
   VStack,
   Heading,
   Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import * as Yup from "yup";
 import { alert } from "../../../utils/alert";
@@ -60,24 +61,34 @@ const Login = () => {
   return (
     <Flex align="center" justify="center" height="100%">
       <Flex
-        bg="white"
         p={4}
-        rounded="md"
-        border="1px"
-        color="border"
+        bg={useColorModeValue("bg", "bgDark")}
+        rounded="lg"
+        boxShadow={{ md: "2xl" }}
         flexDirection="column"
         width="440px"
       >
-        <Heading as="h1" size="lg" color="font" alignSelf="flex-start" pb={2}>
+        <Heading
+          as="h1"
+          size="lg"
+          color={useColorModeValue("font", "bg")}
+          alignSelf="flex-start"
+          pb={2}
+        >
           Iniciar sesión
         </Heading>
         <form onSubmit={handleSubmit}>
           <VStack spacing={2} align="flex-start" color="font">
             <FormControl>
-              <FormLabel fontWeight="normal" htmlFor="username">
+              <FormLabel
+                fontWeight="normal"
+                htmlFor="username"
+                color={useColorModeValue("font", "bg")}
+              >
                 Nombre de usuario
               </FormLabel>
               <Input
+                color={useColorModeValue("font", "bg")}
                 name="username"
                 type="text"
                 variant="outline"
@@ -94,10 +105,15 @@ const Login = () => {
               )}
             </FormControl>
             <FormControl>
-              <FormLabel fontWeight="normal" htmlFor="password">
+              <FormLabel
+                fontWeight="normal"
+                htmlFor="password"
+                color={useColorModeValue("font", "bg")}
+              >
                 Contraseña
               </FormLabel>
               <Input
+                color={useColorModeValue("font", "bg")}
                 name="password"
                 type="password"
                 variant="outline"
@@ -123,13 +139,18 @@ const Login = () => {
                 color: "primary",
                 border: "1px",
               }}
+              _active={{
+                bg: "white",
+                color: "primary",
+                border: "1px",
+              }}
             >
               Enviar
             </Button>
           </VStack>
         </form>
         <Text
-          color="font"
+          color={useColorModeValue("font", "bg")}
           alignSelf="flex-start"
           pt={2}
           _hover={{ color: "link" }}

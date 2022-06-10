@@ -2,7 +2,7 @@ import { extendTheme } from "@chakra-ui/react";
 
 const theme = extendTheme({
   config: {
-    initialColorMode: 'light',
+    initialColorMode: "light",
     useSystemColorMode: true,
   },
   styles: {
@@ -10,6 +10,9 @@ const theme = extendTheme({
       "html, body, #root, main": {
         height: "100%",
         width: "100%",
+      },
+      "button:active": {
+        background: "none !important",
       },
     },
   },
@@ -31,7 +34,17 @@ const theme = extendTheme({
     link: "grey",
     border: "#E9E9E9",
     cardBorder: "#C4C4C4",
-  }
+  },
+  components: {
+    Button: {
+      baseStyle: {
+        _focus: "",
+        _active: {
+          bg: "none",
+        },
+      },
+    },
+  },
 });
 
 export default theme;
