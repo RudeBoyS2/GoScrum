@@ -3,14 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import debounce from "lodash.debounce";
 import TaskForm from "./TaskForm";
 import TaskCard from "./TaskCard";
-// import { getTasks } from "./TasksSlice";
 import {
+  getTasks,
+  deleteTask,
   selectTasks,
   selectLoading,
   selectError,
-  REQUEST,
-  SUCCESS,
-  FAILURE,
 } from "./TasksSlice";
 import {
   Stack,
@@ -27,7 +25,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 
-const { REACT_APP_API } = process.env;
+// const { REACT_APP_API } = process.env;
 
 const Tasks = () => {
   const [list, setList] = useState(null);
@@ -42,33 +40,34 @@ const Tasks = () => {
   const error = useSelector(selectError);
 
   useEffect(() => {
-    dispatch(REQUEST);
-    fetch(`${REACT_APP_API}/task${radioTask === "ME" ? "/me" : ""}`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch(SUCCESS(data.result));
-      })
-      .catch((error) => {
-        dispatch(FAILURE(error));
-      });
-  }, [selectedPriority, newTask, radioTask, dispatch]);
+    dispatch(getTasks(radioTask === "ME" ? "me" : ""));
+  }, [radioTask, newTask, dispatch]);
+
+  // useEffect(() => {
+  //   dispatch(REQUEST);
+  //   fetch(`${REACT_APP_API}/task${radioTask === "ME" ? "/me" : ""}`, {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: "Bearer " + localStorage.getItem("token"),
+  //     },
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       dispatch(SUCCESS(data.result));
+  //     })
+  //     .catch((error) => {
+  //       dispatch(FAILURE(error));
+  //     });
+  // }, [selectedPriority, newTask, radioTask, dispatch]);
 
   useEffect(() => {
     if (tasks?.length) {
-      console.log(tasks);
       setList(tasks);
       setFirstList(tasks);
       setNewTask(false);
-      localStorage.setItem("tasks", tasks?.result?.length);
+      localStorage.setItem("tasks", tasks?.length);
       if (selectedPriority !== "ALL") {
-        setList(
-          tasks.result.filter((data) => data.importance === selectedPriority)
-        );
+        setList(tasks.filter((data) => data.importance === selectedPriority));
       }
     }
   }, [tasks, selectedPriority]);
@@ -84,7 +83,11 @@ const Tasks = () => {
       setSelectedPriority("ALL");
       setList(firstList);
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
+
+  const handleDelete = (id) => dispatch(deleteTask(id));
 
   const handleSearch = debounce((e) => {
     setSearch(e?.target?.value);
@@ -98,6 +101,10 @@ const Tasks = () => {
     setNewTask(true);
   };
 
+  const onDeleteCallback = () => {
+    setNewTask(true);
+  };
+
   const searchInputColor = useColorModeValue(
     { opacity: 1, color: "bgDark" },
     { opacity: 1, color: "button" }
@@ -108,10 +115,17 @@ const Tasks = () => {
   const renderCards = (text) => {
     return list
       ?.filter((data) => data.status === text)
-      .map((data) => <TaskCard data={data} key={data._id} />);
+      .map((data) => (
+        <TaskCard data={data} key={data._id} handleDelete={handleDelete} />
+      ));
   };
 
-  if (error) return <Text>Hubo un error</Text>;
+  if (error)
+    return (
+      <Text mt={6} textAlign="center">
+        Hubo un error
+      </Text>
+    );
 
   return (
     <Stack

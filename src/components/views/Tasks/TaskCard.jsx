@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Stack, Button, Text, Flex } from "@chakra-ui/react";
+import { Stack, Button, Text, Flex, useColorModeValue } from "@chakra-ui/react";
 
 const TaskCard = ({
   data: {
+    _id,
     title,
     createdAt,
     user: { userName },
@@ -10,6 +11,8 @@ const TaskCard = ({
     status,
     importance,
   },
+  handleDelete,
+  onDeleteCallback,
 }) => {
   const [showMore, setShowMore] = useState(false);
 
@@ -41,6 +44,32 @@ const TaskCard = ({
     }
   };
 
+  const statusButtonHoverColor = useColorModeValue(
+    {
+      bg: "white",
+      color: statusButtonColor(),
+      border: "1px",
+    },
+    {
+      bg: "bgDark",
+      color: statusButtonColor(),
+      border: "1px",
+    }
+  );
+
+  const importanceButtonHoverColor = useColorModeValue(
+    {
+      bg: "white",
+      color: importanceButtonColor(),
+      border: "1px",
+    },
+    {
+      bg: "bgDark",
+      color: importanceButtonColor(),
+      border: "1px",
+    }
+  );
+
   return (
     <Stack
       width={{ base: "100%", xl: "200px", "2xl": "300px" }}
@@ -70,11 +99,7 @@ const TaskCard = ({
             p={1}
             color="button"
             bg={statusButtonColor()}
-            _hover={{
-              bg: "button",
-              color: statusButtonColor(),
-              border: "1px",
-            }}
+            _hover={statusButtonHoverColor}
             _active={{
               bg: "white",
               color: statusButtonColor(),
@@ -89,11 +114,7 @@ const TaskCard = ({
             p={1}
             color="button"
             bg={importanceButtonColor()}
-            _hover={{
-              bg: "button",
-              color: importanceButtonColor(),
-              border: "1px",
-            }}
+            _hover={importanceButtonHoverColor}
             _active={{
               bg: "white",
               color: importanceButtonColor(),
@@ -145,7 +166,15 @@ const TaskCard = ({
         )}
       </Flex>
       <Stack>
-        <Button size="xs" bg="none" _hover={{ bg: "none" }}>
+        <Button
+          onClick={() => {
+            handleDelete(_id);
+            onDeleteCallback();
+          }}
+          size="xs"
+          bg="none"
+          _hover={{ bg: "none" }}
+        >
           X
         </Button>
       </Stack>

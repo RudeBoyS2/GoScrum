@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Stack,
   Text,
@@ -18,11 +18,27 @@ import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [display, setDisplay] = useState(false);
+  const [tasksCount] = useState(localStorage.getItem("token"));
+
+  useEffect(() => {}, [tasksCount]);
+
   const navigate = useNavigate();
   const { colorMode, toggleColorMode } = useColorMode();
   const logOutColor = useColorModeValue(
     { bg: "none", color: "font" },
     { bg: "none", color: "button" }
+  );
+  const buttonHoverColor = useColorModeValue(
+    {
+      bg: "white",
+      color: "primary",
+      border: "1px",
+    },
+    {
+      bg: "bgDark",
+      color: "primary",
+      border: "1px",
+    }
   );
 
   const logOut = () => {
@@ -68,11 +84,7 @@ const Header = () => {
             width="70px"
             color="white"
             bg="primary"
-            _hover={{
-              bg: "white",
-              color: "primary",
-              border: "1px",
-            }}
+            _hover={buttonHoverColor}
             _active={{
               bg: "white",
               color: "primary",

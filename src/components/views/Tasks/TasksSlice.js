@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// const { REACT_APP_API } = process.env;
+const { REACT_APP_API } = process.env;
 
+// REDUCERS
 export const tasksSlice = createSlice({
   name: "TASK",
   initialState: {
@@ -24,23 +25,44 @@ export const tasksSlice = createSlice({
   },
 });
 
-// export const getTasks = (path) => (dispatch) => {
-//     dispatch(REQUEST);
-//     fetch(`${REACT_APP_API}task/${path}`, {
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: "Bearer " + localStorage.getItem("loggedIn"),
-//       },
-//     })
-//       .then((resp) => resp.json())
-//       .then((data) => dispatch(SUCCESS(data.result)))
-//       .catch((error) => dispatch(FAILURE(error)));
-//   };
+// HELPER FUNCTIONS
+export const getTasks = (path) => (dispatch) => {
+  dispatch(REQUEST);
+  fetch(`${REACT_APP_API}/task/${path}`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      dispatch(SUCCESS(data.result));
+    })
+    .catch((error) => {
+      dispatch(FAILURE(error));
+    });
+};
 
+export const deleteTask = (id) => (dispatch) => {
+  dispatch(REQUEST);
+  fetch(`${REACT_APP_API}/task/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+  })
+    .then((resp) => resp.json())
+    .then(() => dispatch(getTasks("")))
+    .catch((error) => dispatch(FAILURE(error)));
+};
+
+// SELECTORS
 export const selectTasks = (state) => state.TASK.tasks;
 export const selectLoading = (state) => state.TASK.loading;
 export const selectError = (state) => state.TASK.error;
 
+// ACTION'S IMPORTS
 export const { REQUEST, SUCCESS, FAILURE } = tasksSlice.actions;
 
 export default tasksSlice.reducer;

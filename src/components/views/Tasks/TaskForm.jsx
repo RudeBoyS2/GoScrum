@@ -12,6 +12,7 @@ import {
   Text,
   VStack,
   useToast,
+  useColorModeValue,
 } from "@chakra-ui/react";
 
 const { REACT_APP_API } = process.env;
@@ -68,6 +69,19 @@ const TaskForm = ({ onSubmitCallback }) => {
     touched,
   } = formik;
 
+  const buttonHoverColor = useColorModeValue(
+    {
+      bg: "white",
+      color: "primary",
+      border: "1px",
+    },
+    {
+      bg: "bgDark",
+      color: "primary",
+      border: "1px",
+    }
+  );
+
   return (
     <>
       <Heading as="h1" size="lg" alignSelf="flex-start" fontWeight="bold">
@@ -84,7 +98,7 @@ const TaskForm = ({ onSubmitCallback }) => {
       </Heading>
       <form onSubmit={handleSubmit}>
         <VStack>
-          <Stack width="100%" direction="column">
+          <Stack width="100%" direction={{ base: "column", md: "row" }}>
             <FormControl>
               <Input
                 height="35px"
@@ -175,11 +189,7 @@ const TaskForm = ({ onSubmitCallback }) => {
             width="100px"
             height="40px"
             color="white"
-            _hover={{
-              bg: "white",
-              color: "primary",
-              border: "1px",
-            }}
+            _hover={buttonHoverColor}
             _active={{
               bg: "white",
               color: "primary",
