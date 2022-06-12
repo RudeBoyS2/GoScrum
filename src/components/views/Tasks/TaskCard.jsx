@@ -12,7 +12,9 @@ const TaskCard = ({
     importance,
   },
   handleDelete,
-  onDeleteCallback,
+  editCardStatus,
+  data,
+  // onDeleteCallback,
 }) => {
   const [showMore, setShowMore] = useState(false);
 
@@ -94,6 +96,7 @@ const TaskCard = ({
         </Text>
         <Stack direction="row">
           <Button
+            onClick={() => editCardStatus(data)}
             fontSize="xs"
             height="16px"
             p={1}
@@ -167,10 +170,11 @@ const TaskCard = ({
       </Flex>
       <Stack>
         <Button
-          onClick={() => {
-            handleDelete(_id);
-            onDeleteCallback();
-          }}
+          onClick={() => handleDelete(_id)}
+          // onClick={() => {
+          //   handleDelete(_id);
+          //   onDeleteCallback();
+          // }}
           size="xs"
           bg="none"
           _hover={{ bg: "none" }}

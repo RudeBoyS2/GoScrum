@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { selectTasks } from "../Tasks/TasksSlice";
 import {
   Stack,
   Text,
@@ -18,9 +20,7 @@ import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [display, setDisplay] = useState(false);
-  const [tasksCount] = useState(localStorage.getItem("token"));
-
-  useEffect(() => {}, [tasksCount]);
+  const tasks = useSelector(selectTasks);
 
   const navigate = useNavigate();
   const { colorMode, toggleColorMode } = useColorMode();
@@ -98,7 +98,7 @@ const Header = () => {
           >
             Donar
           </Button>
-          <Text>Tareas creadas: {localStorage.getItem("tasks")}</Text>
+          <Text>Tareas creadas: {tasks?.length} </Text>
           <Text>{localStorage.getItem("username")}</Text>
           <Switch
             onChange={toggleColorMode}

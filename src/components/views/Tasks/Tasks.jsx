@@ -6,6 +6,7 @@ import TaskCard from "./TaskCard";
 import {
   getTasks,
   deleteTask,
+  editCardStatus,
   selectTasks,
   selectLoading,
   selectError,
@@ -25,14 +26,13 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 
-// const { REACT_APP_API } = process.env;
-
 const Tasks = () => {
   const [list, setList] = useState(null);
   const [firstList, setFirstList] = useState(null);
   const [search, setSearch] = useState("");
   const [selectedPriority, setSelectedPriority] = useState("ALL");
   const [newTask, setNewTask] = useState(false);
+  const [deletedTask, setDeletedTask] = useState(false);
   const [radioTask, setRadioTask] = useState("ALL");
   const dispatch = useDispatch();
   const tasks = useSelector(selectTasks);
@@ -41,29 +41,14 @@ const Tasks = () => {
 
   useEffect(() => {
     dispatch(getTasks(radioTask === "ME" ? "me" : ""));
-  }, [radioTask, newTask, dispatch]);
-
-  // useEffect(() => {
-  //   dispatch(REQUEST);
-  //   fetch(`${REACT_APP_API}/task${radioTask === "ME" ? "/me" : ""}`, {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: "Bearer " + localStorage.getItem("token"),
-  //     },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       dispatch(SUCCESS(data.result));
-  //     })
-  //     .catch((error) => {
-  //       dispatch(FAILURE(error));
-  //     });
-  // }, [selectedPriority, newTask, radioTask, dispatch]);
+  }, [radioTask, newTask, deletedTask, dispatch]);
 
   useEffect(() => {
+    // console.log(deletedTask);
     if (tasks?.length) {
       setList(tasks);
       setFirstList(tasks);
+      setDeletedTask(false);
       setNewTask(false);
       localStorage.setItem("tasks", tasks?.length);
       if (selectedPriority !== "ALL") {
@@ -87,7 +72,12 @@ const Tasks = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
 
-  const handleDelete = (id) => dispatch(deleteTask(id));
+  const handleDelete = (id) => {
+    setDeletedTask(true);
+    dispatch(deleteTask(id));
+  };
+
+  const handleEditCardStatus = (data) => dispatch(editCardStatus(data));
 
   const handleSearch = debounce((e) => {
     setSearch(e?.target?.value);
@@ -101,9 +91,9 @@ const Tasks = () => {
     setNewTask(true);
   };
 
-  const onDeleteCallback = () => {
-    setNewTask(true);
-  };
+  // const onDeleteCallback = () => {
+  //   setDeletedTask(true);
+  // };
 
   const searchInputColor = useColorModeValue(
     { opacity: 1, color: "bgDark" },
@@ -116,7 +106,13 @@ const Tasks = () => {
     return list
       ?.filter((data) => data.status === text)
       .map((data) => (
-        <TaskCard data={data} key={data._id} handleDelete={handleDelete} />
+        <TaskCard
+          data={data}
+          key={data._id}
+          handleDelete={handleDelete}
+          editCardStatus={handleEditCardStatus}
+          // onDeleteCallback={onDeleteCallback}
+        />
       ));
   };
 
