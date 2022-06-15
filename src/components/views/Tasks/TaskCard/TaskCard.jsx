@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { deleteTask, editCardStatus } from "../TasksSlice";
 import { Stack, Button, Text, Flex, useColorModeValue } from "@chakra-ui/react";
 
 const TaskCard = ({
@@ -11,12 +13,16 @@ const TaskCard = ({
     status,
     importance,
   },
-  handleDelete,
-  editCardStatus,
   data,
-  // onDeleteCallback,
 }) => {
   const [showMore, setShowMore] = useState(false);
+  const dispatch = useDispatch();
+
+  const handleDelete = (id) => {
+    dispatch(deleteTask(id));
+  };
+
+  const handleEditCardStatus = (data) => dispatch(editCardStatus(data));
 
   const limitString = (string) => {
     if (string.length > 150) {
@@ -96,7 +102,7 @@ const TaskCard = ({
         </Text>
         <Stack direction="row">
           <Button
-            onClick={() => editCardStatus(data)}
+            onClick={() => handleEditCardStatus(data)}
             fontSize="xs"
             height="16px"
             p={1}

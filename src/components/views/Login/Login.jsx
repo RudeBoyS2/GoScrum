@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import * as Yup from "yup";
 import { alert } from "../../../utils/alert";
+import { buttonHoverColor } from "../../../utils/colorModeValues";
 
 const { REACT_APP_API } = process.env;
 
@@ -61,7 +62,10 @@ const Login = () => {
   return (
     <Flex align="center" justify="center" height="100%">
       <Flex
-        p={4}
+        mb={2}
+        px={4}
+        pt={3}
+        pb={2}
         bg={useColorModeValue("bg", "bgDark")}
         rounded="lg"
         boxShadow={{ md: "2xl" }}
@@ -134,11 +138,10 @@ const Login = () => {
               bg="primary"
               width="full"
               color="button"
-              _hover={{
-                bg: "button",
-                color: "primary",
-                border: "1px",
-              }}
+              _hover={useColorModeValue(
+                buttonHoverColor.light,
+                buttonHoverColor.dark
+              )}
               _active={{
                 bg: "white",
                 color: "primary",
@@ -152,8 +155,9 @@ const Login = () => {
         <Text
           color={useColorModeValue("font", "bg")}
           alignSelf="flex-start"
-          pt={2}
+          pt={1}
           _hover={{ color: "link" }}
+          fontSize="14px"
         >
           <Link to="/register">Registrarme</Link>
         </Text>

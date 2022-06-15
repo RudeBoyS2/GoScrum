@@ -87,6 +87,25 @@ export const editCardStatus = (data) => (dispatch) => {
     .catch((error) => dispatch(FAILURE(error)));
 };
 
+export const postNewTask = (data) => (dispatch) => {
+  dispatch(REQUEST());
+  fetch(`${REACT_APP_API}/task`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    body: JSON.stringify({
+      task: { ...data },
+    }),
+  })
+    .then((res) => res.json())
+    .then(() => {
+      dispatch(getTasks(""));
+    })
+    .catch((error) => dispatch(FAILURE(error)));
+};
+
 // SELECTORS
 export const selectTasks = (state) => state.TASK.tasks;
 export const selectLoading = (state) => state.TASK.loading;

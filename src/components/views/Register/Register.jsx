@@ -17,6 +17,7 @@ import {
 import * as Yup from "yup";
 import { v4 as uuidv4 } from "uuid";
 import { Link, useNavigate } from "react-router-dom";
+import { buttonHoverColor } from "../../../utils/colorModeValues";
 
 const { REACT_APP_API } = process.env;
 
@@ -334,11 +335,10 @@ const Register = () => {
               bg="primary"
               width="full"
               color="button"
-              _hover={{
-                bg: "button",
-                color: "primary",
-                border: "1px",
-              }}
+              _hover={useColorModeValue(
+                buttonHoverColor.light,
+                buttonHoverColor.dark
+              )}
               _active={{
                 bg: "white",
                 color: "primary",
@@ -354,6 +354,7 @@ const Register = () => {
           alignSelf="flex-start"
           pt={1}
           _hover={{ color: "link" }}
+          fontSize="14px"
         >
           <Link to="/login">Ir a Iniciar sesión</Link>
         </Text>
