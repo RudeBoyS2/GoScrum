@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import debounce from "lodash.debounce";
-import Header from "../Header/Header";
-import TasksList from "./TasksList";
-import TaskForm from "./TaskForm/TaskForm";
-import TaskCard from "./TaskCard/TaskCard";
-import {
-  searchInputColor,
-  tasksDivBackground,
-} from "../../../../utils/colorModeValues";
+// import Header from "../views/Header/Header";
+import TasksList from "./TasksList/TasksList";
+// import TaskForm from "./TaskForm/TaskForm";
+// import TaskCard from "./TaskCard/TaskCard";
+// import {
+//   searchInputColor,
+//   tasksDivBackground,
+// } from "../../utils/colorModeValues";
 import {
   getTasks,
   selectTasks,
@@ -16,19 +16,19 @@ import {
   selectError,
 } from "./TasksSlice";
 import {
-  Container,
-  Stack,
-  FormControl,
-  HStack,
-  Input,
-  Heading,
-  Select,
-  RadioGroup,
-  Radio,
-  VStack,
+  // Container,
+  // Stack,
+  // FormControl,
+  // HStack,
+  // Input,
+  // Heading,
+  // Select,
+  // RadioGroup,
+  // Radio,
+  // VStack,
   Text,
-  Spinner,
-  useColorModeValue,
+  // Spinner,
+  // useColorModeValue,
 } from "@chakra-ui/react";
 
 const Tasks = () => {
@@ -50,7 +50,6 @@ const Tasks = () => {
     if (tasks?.length) {
       setList(tasks);
       setFirstList(tasks);
-      localStorage.setItem("tasks", tasks?.length);
       if (selectedPriority !== "ALL") {
         setList(tasks.filter((data) => data.importance === selectedPriority));
       }
@@ -68,8 +67,6 @@ const Tasks = () => {
       setSelectedPriority("ALL");
       setList(firstList);
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
 
   useEffect(() => {
@@ -93,11 +90,11 @@ const Tasks = () => {
 
   // const tasksDivBackground = useColorModeValue("bg", "bgDark");
 
-  const renderCards = (text) => {
-    return list
-      ?.filter((data) => data.status === text)
-      .map((data) => <TaskCard data={data} key={data._id} />);
-  };
+  // const renderCards = (text) => {
+  //   return list
+  //     ?.filter((data) => data.status === text)
+  //     .map((data) => <TaskCard data={data} key={data._id} />);
+  // };
 
   if (error)
     return (
@@ -112,7 +109,9 @@ const Tasks = () => {
       handleSearch={handleSearch}
       handleImportanceChange={handleImportanceChange}
       radioTask={radioTask}
+      selectedPriority={selectedPriority}
       setRadioTask={setRadioTask}
+      setSelectedPriority={setSelectedPriority}
       list={list}
     />
   );

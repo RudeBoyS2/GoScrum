@@ -1,8 +1,9 @@
-import TaskForm from "./TaskForm/TaskForm";
+import TaskForm from "../TaskForm/TaskForm";
+import TaskCard from "../TaskCard/TaskCard";
 import {
   searchInputColor,
-  tasksDivBackground,
-} from "../../../../utils/colorModeValues";
+  backgroundColor,
+} from "../../../utils/colorModeValues";
 import {
   Stack,
   FormControl,
@@ -18,18 +19,24 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 
-const TasksList = ({ loading, radioTask, setRadioTask }) => {
-    
+const TasksList = ({
+  loading,
+  handleSearch,
+  radioTask,
+  setRadioTask,
+  selectedPriority,
+  setSelectedPriority,
+  list,
+}) => {
+  const handleImportanceChange = (e) => {
+    setSelectedPriority(e.currentTarget.value);
+  };
 
-    const handleSearch = debounce((e) => {
-        if (tasks.length) {
-          setSearch(e?.target?.value);
-        }
-      }, 400);
-    
-      const handleImportanceChange = (e) => {
-        setSelectedPriority(e.currentTarget.value);
-      };
+  const renderCards = (text) => {
+    return list
+      ?.filter((data) => data.status === text)
+      .map((data) => <TaskCard data={data} key={data._id} />);
+  };
 
   return (
     <Stack
@@ -51,7 +58,7 @@ const TasksList = ({ loading, radioTask, setRadioTask }) => {
         minHeight="100%"
         py={4}
         px={4}
-        bg={tasksDivBackground}
+        bg={useColorModeValue(backgroundColor.light, backgroundColor.dark)}
       >
         <Heading as="h2" size="md" alignSelf="flex-start">
           Mis tareas

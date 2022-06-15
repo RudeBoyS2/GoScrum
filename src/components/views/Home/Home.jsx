@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../Header/Header";
-import Tasks from "../Tasks/Tasks";
+import Tasks from "../../Tasks/Tasks";
 import { Container } from "@chakra-ui/react";
 
 const Home = () => {

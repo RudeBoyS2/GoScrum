@@ -11,9 +11,14 @@ export const buttonHoverColor = {
     },
   };
 
-export const tasksDivBackground = {light: "bg", dark: "bgDark"};
+export const backgroundColor = {light: "bg", dark: "bgDark"};
 
 export const searchInputColor = {
   light: { opacity: 1, color: "bgDark" },
   dark: { opacity: 1, color: "button" }
+};
+
+export const logOutColor = {
+  light: { bg: "none", color: "font" },
+  dark: { bg: "none", color: "button" }
 };

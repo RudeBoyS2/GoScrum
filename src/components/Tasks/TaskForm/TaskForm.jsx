@@ -6,7 +6,7 @@ import {
   initialValues,
   validationSchema,
 } from "./taskFormUtils";
-import { buttonHoverColor } from "../../../../utils/colorModeValues"
+import { buttonHoverColor } from "../../../utils/colorModeValues"
 import {
   Stack,
   FormControl,
@@ -46,19 +46,6 @@ const TaskForm = () => {
     values,
     touched,
   } = formik;
-
-  // const buttonHoverColor = useColorModeValue(
-  //   {
-  //     bg: "white",
-  //     color: "primary",
-  //     border: "1px",
-  //   },
-  //   {
-  //     bg: "bgDark",
-  //     color: "primary",
-  //     border: "1px",
-  //   }
-  // );
 
   return (
     <>

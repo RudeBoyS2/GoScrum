@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectTasks } from "../Tasks/TasksSlice";
+import { selectTasks } from "../../Tasks/TasksSlice";
+import { buttonHoverColor, logOutColor } from "../../../utils/colorModeValues";
 import {
   Stack,
   Text,
@@ -16,7 +18,6 @@ import {
   FormControl,
 } from "@chakra-ui/react";
 import { CloseIcon, HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
-import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [display, setDisplay] = useState(false);
@@ -24,22 +25,22 @@ const Header = () => {
 
   const navigate = useNavigate();
   const { colorMode, toggleColorMode } = useColorMode();
-  const logOutColor = useColorModeValue(
-    { bg: "none", color: "font" },
-    { bg: "none", color: "button" }
-  );
-  const buttonHoverColor = useColorModeValue(
-    {
-      bg: "white",
-      color: "primary",
-      border: "1px",
-    },
-    {
-      bg: "bgDark",
-      color: "primary",
-      border: "1px",
-    }
-  );
+  // const logOutColor = useColorModeValue(
+  //   { bg: "none", color: "font" },
+  //   { bg: "none", color: "button" }
+  // );
+  // const buttonHoverColor = useColorModeValue(
+  //   {
+  //     bg: "white",
+  //     color: "primary",
+  //     border: "1px",
+  //   },
+  //   {
+  //     bg: "bgDark",
+  //     color: "primary",
+  //     border: "1px",
+  //   }
+  // );
 
   const logOut = () => {
     localStorage.removeItem("token");
@@ -84,7 +85,11 @@ const Header = () => {
             width="70px"
             color="white"
             bg="primary"
-            _hover={buttonHoverColor}
+            onClick={() => navigate("/donate", { replace: true })}
+            _hover={useColorModeValue(
+              buttonHoverColor.light,
+              buttonHoverColor.dark
+            )}
             _active={{
               bg: "white",
               color: "primary",
@@ -144,7 +149,7 @@ const Header = () => {
             fontSize="lg"
             bg="transparent"
             color="primary"
-            _hover={logOutColor}
+            _hover={useColorModeValue(logOutColor.light, logOutColor.dark)}
           >
             x
           </Button>
@@ -231,7 +236,7 @@ const Header = () => {
                 fontSize="lg"
                 bg="transparent"
                 color="primary"
-                _hover={logOutColor}
+                _hover={useColorModeValue(logOutColor.light, logOutColor.dark)}
               >
                 x
               </Button>

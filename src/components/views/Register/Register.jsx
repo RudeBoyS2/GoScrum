@@ -75,7 +75,9 @@ const Register = () => {
           region: values.region,
         },
       }),
-    });
+    })
+      .then((resp) => resp.json())
+      .then((r) => console.log(r));
     navigate("/login", { replace: true });
   };
 
