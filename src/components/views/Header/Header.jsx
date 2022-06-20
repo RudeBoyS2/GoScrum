@@ -95,11 +95,6 @@ const Header = () => {
               color: "primary",
               border: "1px",
             }}
-            // _pressed={{
-            //   bg: "white",
-            //   color: "primary",
-            //   border: "1px",
-            // }}
           >
             Donar
           </Button>
@@ -131,7 +126,6 @@ const Header = () => {
               position="absolute"
               top={0.5}
               right={8}
-              // css={``}
               pointerEvents="none"
             />
             <SunIcon
@@ -171,7 +165,7 @@ const Header = () => {
         <Hide above="md">
           <Stack
             w="100vw"
-            h="25vh"
+            h="22vh"
             zIndex={20}
             direction="column"
             bg={useColorModeValue("bg", "bgDark")}
@@ -190,7 +184,7 @@ const Header = () => {
               >
                 Donar
               </Button>
-              <Text>Tareas creadas: {localStorage.getItem("tasks")}</Text>
+              <Text>Tareas creadas: {tasks?.length} </Text>
               <Text>{localStorage.getItem("username")}</Text>
               <FormControl width="44px">
                 <Switch

@@ -1,5 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import {AnimatePresence} from "framer-motion";
 import Home from "./components/views/Home/Home";
 import Login from "./components/views/Login/Login";
 import Register from "./components/views/Register/Register";
@@ -9,7 +10,7 @@ import Layout from "./components/Layout/Layout";
 
 function App() {
   return (
-    <>
+    <AnimatePresence>
       <Routes>
         <Route path="/" element={<Layout />}>
           {/* Login Route */}
@@ -32,7 +33,7 @@ function App() {
           </Route>
         </Route>
       </Routes>
-    </>
+    </AnimatePresence>
   );
 }
 

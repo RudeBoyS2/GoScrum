@@ -12,6 +12,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import * as Yup from "yup";
 import { alert } from "../../../utils/alert";
 import { buttonHoverColor } from "../../../utils/colorModeValues";
@@ -60,7 +61,16 @@ const Login = () => {
     formik;
 
   return (
-    <Flex align="center" justify="center" height="100%">
+    <Flex
+      as={motion.div}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1, transition: { duration: 0.5 } }}
+      exit={{ opacity: 0 }}
+      align="center"
+      justify="center"
+      height="100%"
+      bg={useColorModeValue("bg", "bgDark")}
+    >
       <Flex
         mb={2}
         px={4}

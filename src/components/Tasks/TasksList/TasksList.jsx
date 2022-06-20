@@ -26,7 +26,7 @@ const TasksList = ({
   setRadioTask,
   selectedPriority,
   setSelectedPriority,
-  list,
+  list = [],
 }) => {
   const handleImportanceChange = (e) => {
     setSelectedPriority(e.currentTarget.value);
@@ -42,7 +42,7 @@ const TasksList = ({
     <Stack
       direction={{ base: "column", xl: "row" }}
       width="100%"
-      minHeight="100%"
+      minHeight="91vh"
       spacing={0}
       gap={2}
       py={2}
@@ -110,7 +110,7 @@ const TasksList = ({
             </FormControl>
           </Stack>
         </HStack>
-        {!list ? (
+        {!list.length ? (
           <Stack paddingTop={5}>
             <Text textAlign="center">Agrega una tarea para comenzar</Text>
           </Stack>

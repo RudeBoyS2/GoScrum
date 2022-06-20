@@ -87,6 +87,36 @@ export const editCardStatus = (data) => (dispatch) => {
     .catch((error) => dispatch(FAILURE(error)));
 };
 
+export const editCardPriority = (data) => (dispatch) => {
+  const priorityArray = ["LOW", "MEDIUM", "HIGH"];
+
+  const newPriorityIndex =
+    priorityArray.indexOf(data.importance) > 1
+      ? 0
+      : priorityArray.indexOf(data.importance) + 1;
+
+  dispatch(REQUEST());
+  fetch(`${REACT_APP_API}/task/${data._id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+    mode: "cors",
+    body: JSON.stringify({
+      task: {
+        title: data.title,
+        importance: priorityArray[newPriorityIndex],
+        status: data.status,
+        description: data.description,
+      },
+    }),
+  })
+    .then((resp) => resp.json())
+    .then(() => dispatch(getTasks("")))
+    .catch((error) => dispatch(FAILURE(error)));
+};
+
 export const postNewTask = (data) => (dispatch) => {
   dispatch(REQUEST());
   fetch(`${REACT_APP_API}/task`, {

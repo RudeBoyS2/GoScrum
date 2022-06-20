@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
+import { motion } from "framer-motion";
 import {
   Input,
   Button,
@@ -100,7 +101,17 @@ const Register = () => {
   const textColor = useColorModeValue("font", "bg");
 
   return (
-    <Flex align="center" justify="center" height="100%" mt={1}>
+    <Flex
+      align="center"
+      justify="center"
+      height="100%"
+      mt={1}
+      bg={useColorModeValue("bg", "bgDark")}
+      as={motion.div}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1, transition: { duration: 0.5 } }}
+      exit={{ opacity: 0 }}
+    >
       <Flex
         mb={2}
         px={4}

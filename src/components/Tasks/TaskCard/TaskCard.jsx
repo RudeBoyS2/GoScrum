@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { deleteTask, editCardStatus } from "../TasksSlice";
+import { motion } from "framer-motion";
+import { cardAnimation } from "./TaskCardUtils";
+import { deleteTask, editCardStatus, editCardPriority } from "../TasksSlice";
 import { Stack, Button, Text, Flex, useColorModeValue } from "@chakra-ui/react";
 
 const TaskCard = ({
@@ -15,14 +17,20 @@ const TaskCard = ({
   },
   data,
 }) => {
+  const [isInView, setIsInView] = useState("in");
   const [showMore, setShowMore] = useState(false);
   const dispatch = useDispatch();
 
   const handleDelete = (id) => {
-    dispatch(deleteTask(id));
+    setIsInView("out");
+    setTimeout(() => {
+      dispatch(deleteTask(id));
+    }, 300);
   };
 
   const handleEditCardStatus = (data) => dispatch(editCardStatus(data));
+
+  const handleEditCardPriority = (data) => dispatch(editCardPriority(data));
 
   const limitString = (string) => {
     if (string.length > 150) {
@@ -80,6 +88,10 @@ const TaskCard = ({
 
   return (
     <Stack
+      as={motion.div}
+      variants={cardAnimation}
+      initial="out"
+      animate={isInView}
       width={{ base: "100%", xl: "200px", "2xl": "300px" }}
       minHeight="130px"
       justify="space-between"
@@ -118,6 +130,7 @@ const TaskCard = ({
             {status.toLowerCase()}
           </Button>
           <Button
+            onClick={() => handleEditCardPriority(data)}
             fontSize="xs"
             height="16px"
             p={1}
@@ -177,10 +190,6 @@ const TaskCard = ({
       <Stack>
         <Button
           onClick={() => handleDelete(_id)}
-          // onClick={() => {
-          //   handleDelete(_id);
-          //   onDeleteCallback();
-          // }}
           size="xs"
           bg="none"
           _hover={{ bg: "none" }}
