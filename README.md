@@ -2,15 +2,23 @@
 
 Project for Alkemy's React Acceleration. This project consists in a Kanban-style, list-making application like Trello (https://trello.com), in which user's can make teams (with team members and a team leader) and work under the scrum methodology, posting tasks and changing their current state.
 
-# Build with
+## What does the app includes?
+- Register page, where you can sign up as a leader or as a team member, creating a new team or joining an already created one.
+- Login page.
+- Home page that shows a form to add tasks, and the tasks listed by its current state.
+- Task cards, that shows a title, time stamp, state, priority, and the author of the task.
+- Dark mode.
+
+## Build with
 This project was made with ReactJS and ChakraUI, using the next libraries:
 
 - Redux.
 - React testing library.
 - Framer-motion.
-- Formik.
+- Formik .
 - Yup.
 - Sweet alert.
+
 ## Available Scripts
 
 In the project directory, you can run:
