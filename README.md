@@ -1,6 +1,7 @@
 # Go Scrum by Gaspar
 
 Project for Alkemy's React Acceleration. This project consists in a Kanban-style, list-making application like Trello (https://trello.com), in which user's can make teams (with team members and a team leader) and work under the scrum methodology, posting tasks and changing their current state.
+https://goscrumbygaspar.netlify.app/
 
 ## What does the app includes?
 - Register page, where you can sign up as a leader or as a team member, creating a new team or joining an already created one.
