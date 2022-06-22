@@ -1,7 +1,16 @@
-# Getting Started with Create React App
+# Go Scrum by Gaspar
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Project for Alkemy's React Acceleration. This project consists in a Kanban-style, list-making application like Trello (https://trello.com), in which user's can make teams (with team members and a team leader) and work under the scrum methodology, posting tasks and changing their current state.
 
+# Build with
+This project was made with ReactJS and ChakraUI, using the next libraries:
+
+- Redux.
+- React testing library.
+- Framer-motion.
+- Formik.
+- Yup.
+- Sweet alert.
 ## Available Scripts
 
 In the project directory, you can run:
@@ -44,27 +53,3 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
