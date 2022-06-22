@@ -25,22 +25,6 @@ const Header = () => {
 
   const navigate = useNavigate();
   const { colorMode, toggleColorMode } = useColorMode();
-  // const logOutColor = useColorModeValue(
-  //   { bg: "none", color: "font" },
-  //   { bg: "none", color: "button" }
-  // );
-  // const buttonHoverColor = useColorModeValue(
-  //   {
-  //     bg: "white",
-  //     color: "primary",
-  //     border: "1px",
-  //   },
-  //   {
-  //     bg: "bgDark",
-  //     color: "primary",
-  //     border: "1px",
-  //   }
-  // );
 
   const logOut = () => {
     localStorage.removeItem("token");

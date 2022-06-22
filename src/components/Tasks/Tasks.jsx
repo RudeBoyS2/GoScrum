@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import debounce from "lodash.debounce";
-// import Header from "../views/Header/Header";
 import TasksList from "./TasksList/TasksList";
-// import TaskForm from "./TaskForm/TaskForm";
-// import TaskCard from "./TaskCard/TaskCard";
-// import {
-//   searchInputColor,
-//   tasksDivBackground,
-// } from "../../utils/colorModeValues";
 import {
   getTasks,
   selectTasks,
@@ -16,19 +9,7 @@ import {
   selectError,
 } from "./TasksSlice";
 import {
-  // Container,
-  // Stack,
-  // FormControl,
-  // HStack,
-  // Input,
-  // Heading,
-  // Select,
-  // RadioGroup,
-  // Radio,
-  // VStack,
   Text,
-  // Spinner,
-  // useColorModeValue,
 } from "@chakra-ui/react";
 
 const Tasks = () => {
@@ -82,19 +63,6 @@ const Tasks = () => {
   const handleImportanceChange = (e) => {
     setSelectedPriority(e.currentTarget.value);
   };
-
-  // const searchInputColor = useColorModeValue(
-  //   { opacity: 1, color: "bgDark" },
-  //   { opacity: 1, color: "button" }
-  // );
-
-  // const tasksDivBackground = useColorModeValue("bg", "bgDark");
-
-  // const renderCards = (text) => {
-  //   return list
-  //     ?.filter((data) => data.status === text)
-  //     .map((data) => <TaskCard data={data} key={data._id} />);
-  // };
 
   if (error)
     return (
