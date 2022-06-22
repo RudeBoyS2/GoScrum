@@ -12,11 +12,10 @@ Project for Alkemy's React Acceleration. This project consists in a Kanban-style
 ## Build with
 This project was made with ReactJS and ChakraUI, using the next libraries:
 
-- Redux.
-- React testing library.
-- Framer-motion.
-- Formik .
-- Yup.
+- Redux (state management).
+- React testing library (testing).
+- Framer-motion (animations).
+- Formik and Yup (form validation).
 - Sweet alert.
 
 ## Available Scripts
